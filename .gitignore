@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Local project pointer
+.active-project
+
+# OS noise
+.DS_Store
