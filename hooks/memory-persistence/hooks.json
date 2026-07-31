@@ -1,0 +1,31 @@
+{
+  "description": "Lifecycle hook contract for the research kit's memory persistence. Keyed to project, not to date. Real work spans weeks and months, and a session boundary corresponds to nothing real, so continuity is imposed by project thread.",
+  "events": [
+    {
+      "event": "SessionStart",
+      "id": "session:start",
+      "script": "scripts/memory/session.py start",
+      "purpose": "Load the current state file for the active project and prepend the always-loaded rules.",
+      "blocking": false
+    },
+    {
+      "event": "SessionEnd",
+      "id": "session:end",
+      "script": "scripts/memory/session.py end",
+      "purpose": "Record where work stopped and what remains open, into the active project thread.",
+      "blocking": false
+    }
+  ],
+  "keying": {
+    "by": "project",
+    "not_by": "date",
+    "threads": "one per live project, named by the operator",
+    "state_path": "memory/<project>/state.md"
+  },
+  "operator_expectations": [
+    "Keep persistence local by default.",
+    "Never write a participant identifier, approval reference, or site code into a state file. Governance outranks memory.",
+    "One thread per project. Do not merge threads.",
+    "Bound the context loaded at session start. A state file is a summary, not a transcript."
+  ]
+}

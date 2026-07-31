@@ -1,0 +1,36 @@
+{
+  "description": "Named MCP working sets for the research kit. Enable one set per session. Keep fewer than ten servers enabled and under ~80 active tools. See rules/mcp-discipline.md.",
+  "policy": {
+    "max_enabled_servers_per_session": 10,
+    "max_active_tools_per_session": 80,
+    "default_posture": "off"
+  },
+  "sets": {
+    "evidence": {
+      "purpose": "Literature, evidence synthesis, and trial lookup.",
+      "servers": ["PubMed", "Consensus", "Clinical Trials"]
+    },
+    "data": {
+      "purpose": "Storage and analysis backends.",
+      "servers": ["Supabase", "Synapse"]
+    },
+    "comms": {
+      "purpose": "Scheduling and correspondence.",
+      "servers": ["Gmail", "Calendar", "Drive"]
+    },
+    "media": {
+      "purpose": "Asset generation. Keep off during research, writing, and governance sessions.",
+      "servers": ["Higgsfield", "HeyGen", "Canva"]
+    },
+    "build": {
+      "purpose": "Site and product surfaces.",
+      "servers": ["Wix"]
+    }
+  },
+  "session_profiles": {
+    "grant-writing": ["evidence"],
+    "protocol-development": ["evidence"],
+    "analysis": ["data"],
+    "correspondence": ["comms"]
+  }
+}
