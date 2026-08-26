@@ -1,0 +1,38 @@
+name: provenance-hygiene
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'scripts/provenance_hygiene.py'
+      - 'scripts/install_provenance_hygiene.py'
+      - 'skills/provenance-content-hygiene/**'
+      - 'integrations/gemini-provenance-hygiene/**'
+      - 'integrations/chatgpt/**'
+      - 'rules/provenance-hygiene.md'
+      - 'tests/test_provenance_hygiene.py'
+      - '.github/workflows/provenance-hygiene.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run provenance hygiene tests
+        run: python -m unittest tests/test_provenance_hygiene.py -v
+      - name: Exercise adapter installer in temporary home
+        run: |
+          tmp_home="$(mktemp -d)"
+          python scripts/install_provenance_hygiene.py --all --home "$tmp_home"
+          test -f "$tmp_home/.claude/skills/provenance-content-hygiene/SKILL.md"
+          test -f "$tmp_home/.gemini/extensions/phirilab-provenance-hygiene/GEMINI.md"
+          test -f "$tmp_home/.phirilab/provenance-hygiene/provenance_hygiene.py"
