@@ -1,0 +1,10 @@
+description = "Conservatively clean a user-owned UTF-8 text file while preserving wording and multilingual shaping."
+prompt = """
+The user's raw command is appended below and contains the path of a UTF-8 text file they own or are authorized to process.
+
+First inspect the source with the installed PhiriLab provenance tool. Then, if the deterministic report shows characters in the conservative removal set, use run_shell_command to create a sibling cleaned file and audit record:
+
+python3 ~/.phirilab/provenance-hygiene/provenance_hygiene.py clean <PATH> --output <PATH>.cleaned --audit <PATH>.cleaned.audit.json
+
+Do not overwrite the source unless the user explicitly requests in-place cleaning. Do not paraphrase or otherwise change the prose to affect AI-detector scores. Summarize exactly what was removed and what was preserved.
+"""
