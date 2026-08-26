@@ -1,0 +1,10 @@
+description = "Inspect a user-owned file for hidden Unicode and provenance indicators without modifying it."
+prompt = """
+The user's raw command is appended below and contains the path of a file they own or are authorized to inspect.
+
+Use the run_shell_command tool to execute the installed PhiriLab provenance inspector on that path:
+
+python3 ~/.phirilab/provenance-hygiene/provenance_hygiene.py inspect <PATH> --json
+
+Do not modify the file. Summarize the deterministic findings precisely. Preserve legitimate multilingual Unicode. Do not infer human or AI authorship from the result.
+"""
